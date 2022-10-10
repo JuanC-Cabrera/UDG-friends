@@ -22,19 +22,35 @@
 
 <!DOCTYPE html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <title>Wellcome to UDG-Friends</title>
 </head>
 <body>
 
 <?php if(!empty($user)): ?>
-    <br>Wellcome. <?= $user['email']?>
-    <br>You are Successfully Logged In 
-    <a href="logout.php">Logout</a>
+    <div style="margin-top:100px" class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1>Wellcome <?= $user['email']?></h1>
+                <p>
+                    <br>You are Successfully Logged In 
+                    <a href="logout.php">Logout</a>
+                </p>
+            </div>
+        </div>
+    </div>
 <?php else: ?>
-    <h1>Please Login or SignUp</h1>
-    <a href="login.php">Login</a> or 
-    <a href="signup.php">SignUp</a>
+    <div style="margin-top:100px" class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1>Please Login or SignUp</h1>
+                <a href="login.php">Login</a> or 
+                <a href="signup.php">SignUp</a>
+            </div>
+        </div>
+    </div>
 <?php endif;?>
 </body>
 </html>

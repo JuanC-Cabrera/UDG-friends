@@ -28,21 +28,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <span>or<a href="signup.php">SignUp</a></span>
-
+<div style="margin-top:50px" class="container">   
+<div style="margin-bottom:50px" class="container">
+    <h1 style="color:#052e6c; text-align: center" >Login</h1>
+    </div>
     <?php if(!empty($message)): ?>
         <p><?= $message ?></p>
         <?php endif; ?>
-
-    <form action="login.php" method="post">
-        <input type="text" name="email" placeholder="Enter your email">
-        <input type="password" name="password" placeholder="Enter your password">
-        <input type="submit" value="Send">
-    </form>
+        <div class="container">
+             <div class="card">
+                <div class="card-body">
+                    <form action="login.php" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="text" class="form-control" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter your password">
+                        </div>
+                        <div class="mb-3">
+                        <input type="submit" class="btn btn-success" value="Send">
+                        <a style="margin-left:20px" href="signup.php">Registrarse</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
 </body>
-</html>
+</html>     
