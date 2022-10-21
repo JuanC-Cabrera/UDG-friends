@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-10-2022 a las 19:19:07
+-- Tiempo de generación: 22-10-2022 a las 00:10:54
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -32,18 +32,6 @@ CREATE TABLE `comentarios` (
   `idPublicacion` int(11) NOT NULL,
   `contenidoComentario` longtext NOT NULL,
   `fechaComentario` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `fotos`
---
-
-CREATE TABLE `fotos` (
-  `idFoto` int(11) NOT NULL,
-  `nombreFoto` varchar(200) NOT NULL,
-  `rutaFoto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -92,9 +80,21 @@ CREATE TABLE `notificaciones` (
 CREATE TABLE `perfil` (
   `idperfil` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
-  `idFoto` int(11) NOT NULL,
+  `fotoPerfil` varchar(200) NOT NULL,
   `nombreCompleto` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `perfil`
+--
+
+INSERT INTO `perfil` (`idperfil`, `idUsuario`, `fotoPerfil`, `nombreCompleto`) VALUES
+(1, 1, '/img/imagenesPerfilAdmin.jpg', 'Administrador de UDG-friends'),
+(2, 2, '/img/imagenesPerfilMazapan.jpg', 'Juan Carlos Cabrera Hernández'),
+(3, 3, '/img/imagenesPerfilimages (1).jpg', 'Raymundo Barba'),
+(4, 5, '/img/imagenesPerfilimages.jpg', 'Jesyka Barajas'),
+(5, 4, '/img/imagenesPerfildescarga.jpg', 'Aimee P3'),
+(6, 7, '/img/imagenesPerfilicono_netflix_nuevo.jpg', 'Lesli Cabrera');
 
 -- --------------------------------------------------------
 
@@ -160,9 +160,13 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `idPrivilegio`, `correo`, `usuario`, `contrasena`, `fecha_registro`) VALUES
-(1, 1, 'Administrador@mail.com', 'Super Administrador', '$2y$10$gS13SZn0ULSzef8FxK4lZu4gn5ImLqF.BXYtl/uvNjRdv.2r.0lOm', '2022-10-18 22:20:08'),
-(2, 2, 'juanca@mail.com', 'Juca', '$2y$10$j9W9vmQ/.4F4c9WGGh0n0uRG5scXUGE9XrQV60lWT8SAR.K19nyjm', '2022-10-20 01:27:28'),
-(3, 2, 'ray@mail.com', 'ray', '$2y$10$hEmmyzsAFaOKdbKnW8X5XukdzUnXnU6BriUdCDzz5PiMJbK8xk3iO', '2022-10-20 13:52:48');
+(1, 1, 'Administrador@mail.com', 'Super Administrador', '$2y$10$VqlBO0fsQ1Cgwlpn20o43ePUkySMSXoRwlCEzs.uBb32fwzRYp2k.', '2022-10-21 21:21:41'),
+(2, 2, 'juanca@mail.com', 'Juca', '$2y$10$QMsJFt3w9DqZlckKVhXTCOKbSlMMd4epm1nPaXmC0YgC3QyPO8G6C', '2022-10-21 21:23:18'),
+(3, 2, 'ray@mail.com', 'Ray', '$2y$10$3nOXf4fJxsMqOMAxUPMTYuh/jmhV92ACja1JTuHkR.7g49ZxCvY8i', '2022-10-21 21:24:52'),
+(4, 2, 'aimee@mail.com', 'Aime3', '$2y$10$kwnyn5vjjMJMe4DZs2.epeFchA/CVthFvMouMCy9AeolhPi9OZn7a', '2022-10-21 21:29:25'),
+(5, 2, 'jesykass@mail.com', 'jesykass', '$2y$10$nxdybkxCbstTY453I5kOOu0TRTkkFmlhkQUlJNb5P8/OcqBpbiKKO', '2022-10-21 21:29:43'),
+(6, 2, 'profeSer@mail.com', 'Sergio', '$2y$10$Iivu4u79ltbZWJiXrA57P.QN1IYsbVDfQ7VHjM7a6byvUh6pyZnha', '2022-10-21 21:35:15'),
+(7, 2, 'lesli@mail.com', 'Lesli', '$2y$10$Xzb9r5bcQTiFGWfk.s3eRO4E3L8gdsS0yWNwfZHL1gBOn.4PVtPMO', '2022-10-21 21:39:17');
 
 --
 -- Índices para tablas volcadas
@@ -174,12 +178,6 @@ INSERT INTO `usuarios` (`idusuario`, `idPrivilegio`, `correo`, `usuario`, `contr
 ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`idcomentario`),
   ADD KEY `comentarioPublicacion_idx` (`idPublicacion`);
-
---
--- Indices de la tabla `fotos`
---
-ALTER TABLE `fotos`
-  ADD PRIMARY KEY (`idFoto`);
 
 --
 -- Indices de la tabla `likes`
@@ -208,8 +206,7 @@ ALTER TABLE `notificaciones`
 --
 ALTER TABLE `perfil`
   ADD PRIMARY KEY (`idperfil`),
-  ADD KEY `perfilUser_idx` (`idUsuario`),
-  ADD KEY `fotoUsuario_idx` (`idFoto`);
+  ADD KEY `perfilUser_idx` (`idUsuario`);
 
 --
 -- Indices de la tabla `privilegios`
@@ -248,12 +245,6 @@ ALTER TABLE `comentarios`
   MODIFY `idcomentario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `fotos`
---
-ALTER TABLE `fotos`
-  MODIFY `idFoto` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
@@ -275,7 +266,7 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `idperfil` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idperfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `privilegios`
@@ -299,7 +290,7 @@ ALTER TABLE `tiposnotificaciones`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -334,7 +325,6 @@ ALTER TABLE `notificaciones`
 -- Filtros para la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  ADD CONSTRAINT `fotoUsuario` FOREIGN KEY (`idFoto`) REFERENCES `fotos` (`idFoto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `perfilUser` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
