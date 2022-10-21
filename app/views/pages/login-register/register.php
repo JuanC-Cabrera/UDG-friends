@@ -4,8 +4,6 @@ include_once URL_APP . '/views/custom/header.php';
 
 ?>
 
-
-
 <div style="margin-top:50px" class="container">
     <div style="margin-bottom:50px" class="container">
         <h1 style="color:#052e6c; text-align: center; margin-top:40px; font-weight: bold; "><b>UDG Friends</b></h1>
