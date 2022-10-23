@@ -10,6 +10,7 @@ class Home extends Controller
     public function index()
     {
         if (isset($_SESSION['logueado'])) {
+
             $datosUsuario = $this->usuario->getUsuario($_SESSION['usuario']);
             $datosPerfil = $this->usuario->getPerfil($_SESSION['logueado']);
 
@@ -18,6 +19,7 @@ class Home extends Controller
                     'usuario' => $datosUsuario,
                     'perfil' => $datosPerfil
                 ];
+
                 $this->view('pages/home', $datosRed);
             } else {
                 $this->view('pages/perfil/completarPerfil', $_SESSION['logueado']);
@@ -36,8 +38,6 @@ class Home extends Controller
             ];
 
             $datosUsuario = $this->usuario->getUsuario($datosLogin['usuario']);
-
-            var_dump($datosUsuario);
 
             if ($this->usuario->verificarContrasena($datosUsuario, $datosLogin['contrasena'])) {
                 $_SESSION['logueado'] = $datosUsuario->idusuario;
@@ -87,24 +87,23 @@ class Home extends Controller
 
     public function insertarRegistrosPerfil()
     {
-        $carpeta = 'C:/xampp/htdocs/UDG-friends/public/img/imagenesPerfil';
+        $carpeta = 'C:/xampp/htdocs/UDG-friends/public/img/imagenesPerfil/';
         opendir($carpeta);
-        $rutaImagen = '/img/imagenesPerfil' . $_FILES['imagen']['name'];
-        $ruta= $carpeta . $_FILES['imagen']['name'];
+        $rutaImagen = '/img/imagenesPerfil/' . $_FILES['imagen']['name'];
+        $ruta = $carpeta . $_FILES['imagen']['name'];
         copy($_FILES['imagen']['tmp_name'], $ruta);
 
         $datos = [
-            'idusuario'=> trim($_POST['id_user']), 
+            'idusuario' => trim($_POST['id_user']),
             'nombre' => trim($_POST['nombre']),
             'ruta' => $rutaImagen
         ];
 
-       if($this->usuario->insertarPerfil($datos)){
-        redirection('/home');
-       }else{
-        echo 'El perfil no se ha guardado';
-       }
-
+        if ($this->usuario->insertarPerfil($datos)) {
+            redirection('/home');
+        } else {
+            echo 'El perfil no se ha guardado';
+        }
     }
 
     public function logout()
@@ -116,5 +115,25 @@ class Home extends Controller
         session_destroy();
 
         redirection('/home');
+    }
+
+    //funciones para el perfil
+
+    public function perfil()
+    {
+        if (isset($_SESSION['logueado'])) {
+
+            $datosUsuario = $this->usuario->getUsuario($_SESSION['usuario']);
+            $datosPerfil = $this->usuario->getPerfil($_SESSION['logueado']);
+
+            if ($datosPerfil) {
+                $datosRed = [
+                    'usuario' => $datosUsuario,
+                    'perfil' => $datosPerfil
+                ];
+
+                $this->view('pages/perfil/perfil', $datosRed);
+            }
+        } else {}
     }
 }

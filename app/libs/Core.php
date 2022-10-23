@@ -8,10 +8,9 @@ class Core
 
     public function __construct()
     {
+        $url = $this->getUrl();
 
-        $url = $this->getURL();
-
-        if (file_exists("../app/controller/" . ".php")) {
+        if (file_exists("../app/controllers/" .  ".php")) {
             $this->currentController = ucwords($url[0]);
             unset($url[0]);
         }
@@ -30,7 +29,7 @@ class Core
         call_user_func_array([$this->currentController, $this->currentMethod], $this->parameters);
     }
 
-    public function getURL()
+    public function getUrl()
     {
         if (isset($_GET["url"])) {
             $url = trim($_GET["url"], "/");

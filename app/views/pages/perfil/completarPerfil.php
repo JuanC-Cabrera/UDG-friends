@@ -22,9 +22,9 @@ include_once URL_APP . '/views/custom/header.php';
                             <label class="form-control" for="imagen">Seleccionar una foto</label>
                             <input type="file" class="form-control" id="inputGroupFile01" name="imagen" id="imagen" required>
                         </div>
+                    </div>
                         <button class="btn btn-primary">Registrar datos</button>
                         <a style="text-decoration: none; margin-left:20px " class="mb-3" href="<?php echo URL_PROJECT ?>/home/logout">Regresar al login</a>
-                    </div>
                 </form>
             </div>
         </div>

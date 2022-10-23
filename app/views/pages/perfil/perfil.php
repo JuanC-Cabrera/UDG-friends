@@ -6,6 +6,10 @@ include_once URL_APP . '/views/custom/navbar.php';
 
 ?>
 
+<div >
+                <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
+</div>
+
 <div style=" width: 80%; margin:auto; margin-top:20px" class="row">
     <div class="col">
         <!-- Columna de perfil-->
@@ -57,9 +61,6 @@ include_once URL_APP . '/views/custom/navbar.php';
         </div>
     </div>
 </div>
-
-
-
 
 <?php
 

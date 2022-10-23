@@ -2,6 +2,7 @@
 
 class usuario
 {
+  
   private $db;
 
   public function __construct()
