@@ -12,9 +12,9 @@ include_once URL_APP . '/views/custom/navbar.php';
         <div style="justify-content: center" class="card">
             <div class="card-img-top carta-arriba"></div>
             <div class="foto-columna">
-                <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
+            <a href="<?php echo URL_PROJECT ?>/home/perfil/<?php echo $datos['usuario']->usuario ?>">  <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" /> </a>
             </div>
-            <a href="<?php echo URL_PROJECT ?>/home/perfil/<?php echo ucwords($_SESSION['usuario']); ?>"><div style="margin:auto; margin-top:5px; font-size:x-large;text-align: center;"><?php echo $datos['perfil']->nombreCompleto ?></div></a>
+            <a style="text-decoration:none; color: #000" href="<?php echo URL_PROJECT ?>/home/perfil/<?php echo $datos['usuario']->usuario ?>"><div style="margin:auto; margin-top:5px; font-size:x-large;text-align: center;"><?php echo $datos['perfil']->nombreCompleto ?></div></a>
             <div style="margin:auto; margin-bottom: 20px;" class="row">
                 <a style="text-decoration:none; color: #000" class="col" href="#">Publicaciones <br> 0 </a>
                 <a style="text-decoration:none; color: #000" class="col" href="#">Reacciones <br> 0 </a>
@@ -31,7 +31,7 @@ include_once URL_APP . '/views/custom/navbar.php';
                     <a href="<?php echo URL_PROJECT ?>/home/perfil/<?php echo ucwords($_SESSION['usuario']); ?>"> <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" /></a>
                 </div>
 
-                <div style="margin-top:-55px; margin-left:80px; font-size:20px " class="mb-3"> <?php echo ucwords($_SESSION['usuario']); ?></div>
+                <div style="margin-top:-55px; margin-left:80px; font-size:20px " class="mb-3"> <?php  echo $datos['usuario']->usuario ?></div>
             </div>
             <form action="" class="">
                 <div class="form-floating">

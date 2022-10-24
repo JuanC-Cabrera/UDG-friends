@@ -121,19 +121,36 @@ class Home extends Controller
 
     public function perfil()
     {
+
         if (isset($_SESSION['logueado'])) {
 
-            $datosUsuario = $this->usuario->getUsuario($_SESSION['usuario']);
-            $datosPerfil = $this->usuario->getPerfil($_SESSION['logueado']);
+            $perfil = $_SESSION['usuario'];
 
-            if ($datosPerfil) {
-                $datosRed = [
-                    'usuario' => $datosUsuario,
-                    'perfil' => $datosPerfil
-                ];
+            $datos = [
+                'perfil' => $this->usuario->getPerfil($_SESSION['logueado'])
+            ];
 
-                $this->view('pages/perfil/perfil', $datosRed);
-            }
-        } else {}
+            $this->view('pages/perfil/perfil', $datos, $perfil);
+        }
+    }
+
+    public function cambiarImagen()
+    {
+        $carpeta = 'C:/xampp/htdocs/UDG-friends/public/img/imagenesPerfil/';
+        opendir($carpeta);
+        $rutaImagen = '/img/imagenesPerfil/' . $_FILES['imagen']['name'];
+        $ruta = $carpeta . $_FILES['imagen']['name'];
+        copy($_FILES['imagen']['tmp_name'], $ruta);
+
+        $datos = [
+            'idusuario' => trim($_POST['id_user']),
+            'ruta' => $rutaImagen
+        ];
+
+        if ($this->usuario->editarFoto($datos)) {
+            redirection('/home/perfil/perfil');
+        } else {
+            echo 'El perfil no se ha guardado';
+        }
     }
 }
