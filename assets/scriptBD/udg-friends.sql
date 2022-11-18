@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2022 a las 00:10:54
+-- Tiempo de generación: 24-10-2022 a las 16:11:07
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -89,12 +89,11 @@ CREATE TABLE `perfil` (
 --
 
 INSERT INTO `perfil` (`idperfil`, `idUsuario`, `fotoPerfil`, `nombreCompleto`) VALUES
-(1, 1, '/img/imagenesPerfilAdmin.jpg', 'Administrador de UDG-friends'),
-(2, 2, '/img/imagenesPerfilMazapan.jpg', 'Juan Carlos Cabrera Hernández'),
-(3, 3, '/img/imagenesPerfilimages (1).jpg', 'Raymundo Barba'),
-(4, 5, '/img/imagenesPerfilimages.jpg', 'Jesyka Barajas'),
-(5, 4, '/img/imagenesPerfildescarga.jpg', 'Aimee P3'),
-(6, 7, '/img/imagenesPerfilicono_netflix_nuevo.jpg', 'Lesli Cabrera');
+(1, 1, '/img/imagenesPerfil/Admin.jpg', 'Administrador de UDG-friends'),
+(2, 2, '/img/imagenesPerfil/Mazapan.jpg', 'Juan Carlos Cabrera Hernández'),
+(3, 4, '/img/imagenesPerfil/images.jpg', 'Jesyka Jazmin Barajas'),
+(4, 5, '/img/imagenesPerfil/icono_netflix_nuevo.jpg', 'Mike Ruiz'),
+(5, 6, '/img/imagenesPerfil/descarga (1).jpg', 'Tets test');
 
 -- --------------------------------------------------------
 
@@ -160,13 +159,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `idPrivilegio`, `correo`, `usuario`, `contrasena`, `fecha_registro`) VALUES
-(1, 1, 'Administrador@mail.com', 'Super Administrador', '$2y$10$VqlBO0fsQ1Cgwlpn20o43ePUkySMSXoRwlCEzs.uBb32fwzRYp2k.', '2022-10-21 21:21:41'),
-(2, 2, 'juanca@mail.com', 'Juca', '$2y$10$QMsJFt3w9DqZlckKVhXTCOKbSlMMd4epm1nPaXmC0YgC3QyPO8G6C', '2022-10-21 21:23:18'),
-(3, 2, 'ray@mail.com', 'Ray', '$2y$10$3nOXf4fJxsMqOMAxUPMTYuh/jmhV92ACja1JTuHkR.7g49ZxCvY8i', '2022-10-21 21:24:52'),
-(4, 2, 'aimee@mail.com', 'Aime3', '$2y$10$kwnyn5vjjMJMe4DZs2.epeFchA/CVthFvMouMCy9AeolhPi9OZn7a', '2022-10-21 21:29:25'),
-(5, 2, 'jesykass@mail.com', 'jesykass', '$2y$10$nxdybkxCbstTY453I5kOOu0TRTkkFmlhkQUlJNb5P8/OcqBpbiKKO', '2022-10-21 21:29:43'),
-(6, 2, 'profeSer@mail.com', 'Sergio', '$2y$10$Iivu4u79ltbZWJiXrA57P.QN1IYsbVDfQ7VHjM7a6byvUh6pyZnha', '2022-10-21 21:35:15'),
-(7, 2, 'lesli@mail.com', 'Lesli', '$2y$10$Xzb9r5bcQTiFGWfk.s3eRO4E3L8gdsS0yWNwfZHL1gBOn.4PVtPMO', '2022-10-21 21:39:17');
+(1, 1, 'Administrador@mail.com', 'Super Administrador', '$2y$10$8ThOuJTT106AVKidheFZHO4gA6IXd7BanACgDF4WFCke8x0DeLTFm', '2022-10-23 02:26:29'),
+(2, 2, 'juca@gmail.com', 'Juca', '$2y$10$MT2.Csr1KSiKLLDVM3Db3.epOmn/Lw969vfr7M6L720apumRw5sG2', '2022-10-23 03:21:18'),
+(3, 2, 'pepe@mail.com', 'pepe', '$2y$10$2GYUuhGSZHy5F/xXjQRRGuPffsYim4kGpbrNdfnbGqNRtghr5QczK', '2022-10-23 03:37:32'),
+(4, 2, 'jesykass@mail.com', 'jesykass', '$2y$10$7zfX15mEFopnEL9lWyEic.0gdSEPSL9unMazg2zUnu0/8xOKsbzXC', '2022-10-23 17:01:12'),
+(5, 2, 'test@mail.com', 'mike', '$2y$10$ceWA/7.A7lqOb9beLxea4eYNaZ7SD.1JzEoyUnzMZLVzhrPGzF8ye', '2022-10-23 17:07:16'),
+(6, 2, 'test@mail.com', 'Test', '$2y$10$BXBrycngc6OAWD4XQcZtKewpTj1zeNZSCAjisFtuQTrbJN2840Kxi', '2022-10-24 13:14:10');
 
 --
 -- Índices para tablas volcadas
@@ -266,7 +264,7 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `idperfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idperfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `privilegios`
@@ -290,7 +288,7 @@ ALTER TABLE `tiposnotificaciones`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

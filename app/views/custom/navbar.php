@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto ">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Inicio</a>
+                    <a class="nav-link" href="<?php echo URL_PROJECT ?>/home">Inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Usuarios</a>
@@ -29,8 +29,8 @@
                     <a class="nav-link" href="#">Notificaciones</a>
                 </li>
                 <li class="nav-item">
-                    <div style ="width:30px; height:30px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:5px">
-                    <img  style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
+                    <div style ="width:30px; height:30px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:5px;">
+                    <img  style="width:100%; max-width: 150%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
                 </div>
                 </li>
                

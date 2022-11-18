@@ -13,11 +13,14 @@ class Home extends Controller
 
             $datosUsuario = $this->usuario->getUsuario($_SESSION['usuario']);
             $datosPerfil = $this->usuario->getPerfil($_SESSION['logueado']);
+            $datosPublicaciones = $this->usuario->getPublicaciones();
+
 
             if ($datosPerfil) {
                 $datosRed = [
                     'usuario' => $datosUsuario,
-                    'perfil' => $datosPerfil
+                    'perfil' => $datosPerfil,
+                    'publicaciones' =>  $datosPublicaciones
                 ];
 
                 $this->view('pages/home', $datosRed);
@@ -119,18 +122,18 @@ class Home extends Controller
 
     //funciones para el perfil
 
-    public function perfil()
+    public function perfil($user)
     {
 
         if (isset($_SESSION['logueado'])) {
 
-            $perfil = $_SESSION['usuario'];
+            $datosPerfil =  $this->usuario->getPerfil($_SESSION['logueado']);
 
-            $datos = [
-                'perfil' => $this->usuario->getPerfil($_SESSION['logueado'])
+          $datos = [
+                'perfil' => $datosPerfil
             ];
 
-            $this->view('pages/perfil/perfil', $datos, $perfil);
+            $this->view('pages/perfil/perfil', $datos);
         }
     }
 
@@ -147,10 +150,57 @@ class Home extends Controller
             'ruta' => $rutaImagen
         ];
 
+        $imagenActual = $this->usuario->getPerfil($datos['idusuarios']);
+
+        unlink('C:/xampp/htdocs/UDG-friends/public/'.$imagenActual->fotoPerfil);
+
         if ($this->usuario->editarFoto($datos)) {
             redirection('/home/perfil/perfil');
         } else {
             echo 'El perfil no se ha guardado';
         }
     }
+
+    public function publicar($idUsuario)
+    {
+    
+    if(isset($_FILES['imagen'])){
+        $carpeta = 'C:/xampp/htdocs/UDG-friends/public/img/imagenesPublicaciones/';
+        opendir($carpeta);
+        $rutaImagen = '/img/imagenesPublicaciones/' . $_FILES['imagen']['name'];
+        $ruta = $carpeta . $_FILES['imagen']['name'];
+        if($ruta == $carpeta ){
+            $rutaImagen = 'Sin imagen';
+        }else{
+        copy($_FILES['imagen']['tmp_name'], $ruta);
+        }
+    }
+
+        $datos = [
+            'idusuario' => trim($_POST['id_user']),
+            'contenido' => trim($_POST['contenido']),
+            'ruta' => $rutaImagen
+        ];
+
+        if ($this->usuario->publicar($datos)) {
+            redirection('/home');
+        } else {
+            echo 'Ya fallo';
+        }
+    }
+
+    public function eliminar($idpublicacion){    
+
+        $publicacion = $this->usuario->getpublicacion($idpublicacion);
+
+        if($this->usuario->eliminarPublicacion($publicacion)){
+            unlink('C:/xampp/htdocs/UDG-friends/public/' . $publicacion->fotoPublicacion);
+            redirection('/home');
+        }else{
+
+        }
+       
+
+    }
+
 }

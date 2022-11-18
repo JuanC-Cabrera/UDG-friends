@@ -7,7 +7,7 @@ include_once URL_APP . '/views/custom/navbar.php';
 ?>
 
 <div class="" style="width:100%; height:300px; background-color: #ccc;  overflow: hidden;">
-    <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
+    <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/img/imagenesPerfil/fondo.jpg' ?>" alt="perfil" />
 </div>
 
 <div style=" width: 80%; margin:auto; margin-top:20px" class="row">
@@ -19,23 +19,21 @@ include_once URL_APP . '/views/custom/navbar.php';
                 <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
             </div>
            
-            <form  action="<?php echo URL_PROJECT ?>/home/cambiarImagen" method="POST" enctype="multipart/form-data">
+            
                 <div style="margin:auto">
+                <form  action="<?php echo URL_PROJECT ?>/home/cambiarImagen" method="POST" enctype="multipart/form-data">
                     <div class="file-select" id="src-file1">
                         <input type="hidden" name="id_user" value="<?php echo $_SESSION['logueado']?>">
-                        <input type="file" name="imagen">
+                        <input accept="image/png,image/jpeg" type="file" name="imagen" required>
                     </div>
 
                     <button class="btn btn-success">Cambiar foto</button>
+                    </form>
                 </div>
-            </form>
+        
         
             <div style="margin:auto; margin-top:5px; font-size:x-large;text-align: center;"><?php echo $datos['perfil']->nombreCompleto ?></div>
-            <div style="margin:auto; margin-bottom: 20px;" class="row">
-                <a style="text-decoration:none; color: #000" class="col" href="#">Publicaciones <br> 0 </a>
-                <a style="text-decoration:none; color: #000" class="col" href="#">Reacciones <br> 0 </a>
-            </div>
-
+           <div style="height:20px"></div>
         </div>
     </div>
     <!-- Columna principal-->

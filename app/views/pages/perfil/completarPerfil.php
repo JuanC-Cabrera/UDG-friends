@@ -20,7 +20,7 @@ include_once URL_APP . '/views/custom/header.php';
                     <div>
                         <div class="input-group mb-3">
                             <label class="form-control" for="imagen">Seleccionar una foto</label>
-                            <input type="file" class="form-control" id="inputGroupFile01" name="imagen" id="imagen" required>
+                            <input accept="image/png,image/jpeg" type="file" class="form-control" id="inputGroupFile01" name="imagen" id="imagen" required>
                         </div>
                     </div>
                         <button class="btn btn-primary">Registrar datos</button>
