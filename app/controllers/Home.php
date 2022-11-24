@@ -17,12 +17,17 @@ class Home extends Controller
 
             $verificarLike = $this->usuario->misLikes($_SESSION['logueado']);
 
+            $comentarios = $this->usuario->getComentarios();
+
+            $informacionComentarios = $this->usuario->getInformacionComentarios($comentarios);
+
             if ($datosPerfil) {
                 $datosRed = [
                     'usuario' => $datosUsuario,
                     'perfil' => $datosPerfil,
                     'publicaciones' =>  $datosPublicaciones,
-                    'misLikes' => $verificarLike
+                    'misLikes' => $verificarLike,
+                    'comentarios' => $informacionComentarios
                 ];
 
                 $this->view('pages/home', $datosRed);
@@ -129,7 +134,7 @@ class Home extends Controller
 
         if (isset($_SESSION['logueado'])) {
 
-            $datosPerfil =  $this->usuario->getPerfil($_SESSION['logueado']);
+            $datosPerfil =  $this->usuario->getPerfil($user);
 
             $datos = [
                 'perfil' => $datosPerfil
@@ -222,5 +227,38 @@ class Home extends Controller
             }
             redirection('/home');
         }
+    }
+
+
+
+    public function comentar()
+    {
+
+        if ($_SERVER['REQUEST_METHOD']=='POST') {
+            $datos = [
+                'iduser' => trim($_POST['iduser']),
+                'idpublicacion' => trim($_POST['idpublicacion']),
+                'comentario' =>  trim($_POST['comentario']),
+            ];
+
+            if ($this->usuario->publicarComentario($datos)) {
+                redirection('/home');
+            } else {
+                redirection('/home');
+            }
+
+        }else{
+            redirection('/home');
+        }
+
+       
+    }
+
+    public function eliminarComentario($id)
+    {
+
+        $this->usuario->eliminarComentarioUsuario($id);
+            redirection('/home');
+       
     }
 }

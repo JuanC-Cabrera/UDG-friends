@@ -26,7 +26,7 @@ class usuario
 
   public function getPublicaciones()
   {
-    $this->db->query('SELECT P.idpublicacion , P.contenidoPublicacion , P.fotoPublicacion , P.fechaPublicacion, P.num_likes, U.usuario ,  Per.fotoPerfil FROM publicaciones P
+    $this->db->query('SELECT P.idUserPublico, P.idpublicacion , P.contenidoPublicacion , P.fotoPublicacion , P.fechaPublicacion, P.num_likes, U.usuario ,  Per.fotoPerfil FROM publicaciones P
     INNER JOIN usuarios U ON U.idusuario = P.idUserPublico
     INNER JOIN perfil Per ON Per.idUsuario = P.idUserPublico');
     return $this->db->registers();
@@ -39,9 +39,26 @@ class usuario
     return $this->db->register();
   }
 
+  public function getComentarios()
+  {
+    $this->db->query('SELECT * FROM comentarios');
+    return $this->db->registers();
+  }
+
+  public function getInformacionComentarios($comentarios)
+  {
+    $this->db->query('SELECT C.idcomentario, C.idPublicacion, C.contenidoComentario, C.fechaComentario,C.idUser, P.fotoPerfil, U.usuario FROM comentarios C
+    INNER JOIN perfil P ON P.idUsuario = C.idUser
+    INNER JOIN usuarios U ON U.idusuario = C.idUser');
+
+    return $this->db->registers();
+  }
 
   public function eliminarPublicacion($publicacion)
   {
+    $this->db->query('DELETE FROM comentarios WHERE idPublicacion = :publicacion');
+    $this->db->bind(':publicacion', $publicacion->idpublicacion);
+    if ($this->db->execute()) {
     $this->db->query('DELETE FROM likes WHERE idPublicacion = :publicacion');
     $this->db->bind(':publicacion', $publicacion->idpublicacion);
     if ($this->db->execute()) {
@@ -53,6 +70,7 @@ class usuario
       return false;
     }
     } else {}
+  } else {}
   }
 
   public function rowLikes($datos)
@@ -84,6 +102,17 @@ class usuario
     $this->db->bind(':publicacion', $datos['idpublicacion']);
     $this->db->bind(':iduser', $datos['idusuario']);
     $this->db->execute();
+  }
+
+  public function eliminarComentarioUsuario($id)
+  {
+    $this->db->query('DELETE FROM comentarios WHERE idcomentario = :id');
+    $this->db->bind(':id', $id);
+    if($this->db->execute()){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public function addLikeCount($datos)
@@ -190,4 +219,18 @@ class usuario
       return false;
     }
   }
+
+  public function publicarComentario($datos)
+  {
+    $this->db->query('INSERT INTO comentarios (idPublicacion, idUser, contenidoComentario) VALUES (:idpubli, :iduser, :comentario)');
+    $this->db->bind(':idpubli', $datos['idpublicacion']);
+    $this->db->bind(':iduser', $datos['iduser']);
+    $this->db->bind(':comentario', $datos['comentario']);
+    if($this->db->execute()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }

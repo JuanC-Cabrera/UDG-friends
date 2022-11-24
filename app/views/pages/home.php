@@ -4,6 +4,7 @@ include_once URL_APP . '/views/custom/header.php';
 
 include_once URL_APP . '/views/custom/navbar.php';
 
+
 ?>
 
 <div style=" width: 80%; margin:auto; margin-top:20px" class="row">
@@ -67,8 +68,10 @@ include_once URL_APP . '/views/custom/navbar.php';
                             <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datosPublicacion->fotoPerfil ?>" alt="perfil" />
 
                         </div>
-                        <div style="margin-top:-55px; margin-left:80px; font-size:20px " class="mb-3"><?php echo ucwords($datosPublicacion->usuario) ?>
+                        <a href="<?php echo URL_PROJECT ?>/<?php echo ucwords($datosPublicacion->idUserPublico); ?>/perfil/"><div style="margin-top:-55px; margin-left:80px; font-size:20px " class="mb-3"><?php echo ucwords($datosPublicacion->usuario) ?></a>
+                          <?php if($datosPublicacion->idUserPublico == $_SESSION['logueado']|| $_SESSION['logueado']== 1):?>
                             <a href="<?php echo URL_PROJECT ?>/<?php echo $datosPublicacion->idpublicacion ?>/eliminar/" style="float:right; margin-right:20px"> <img src="<?php echo URL_PROJECT . '/public/img/eliminar.png' ?>" alt="borrar" /></a>
+                            <?php endif?>
                         </div>
 
                         <span><?php echo $datosPublicacion->fechaPublicacion ?></span>
@@ -84,14 +87,14 @@ include_once URL_APP . '/views/custom/navbar.php';
 
                         <!--Comentarios-->
                         <div class="">
-                            <div class="" style="width:30px; height:30px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:15px">
+                            <div class="" style="width:40px; height:40px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:15px">
                                 <a href="<?php echo URL_PROJECT ?>/<?php echo ucwords($_SESSION['usuario']); ?>/perfil/"> <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" /></a>
                             </div>
-                            <form action="<?php echo URL_PROJECT ?>/home/comentar">
+                            <form action="<?php echo URL_PROJECT ?>/home/comentar" method="POST">
                                 <input type="hidden" name="iduser" value="<?php echo $_SESSION['logueado'] ?>">
-                                <input type="hidden" name="idpublicacion" value="<?php echo $datosPublicacion->idpublicacion?>">
+                                <input type="hidden" name="idpublicacion" value="<?php echo $datosPublicacion->idpublicacion ?>">
                                 <div class="form-floating">
-                                    <textarea name="comentario" class="form-control " id="floatingTextarea" required></textarea>
+                                    <textarea name="comentario" class="form-control " placeholder="Que estas pensando?" id="floatingTextarea" required></textarea>
                                     <label for="floatingTextarea">comentar</label>
                                 </div>
                                 <div class="">
@@ -101,6 +104,25 @@ include_once URL_APP . '/views/custom/navbar.php';
 
                         </div>
 
+                        <?php foreach ($datos['comentarios'] as $datosComentarios) : ?>
+                            <?php if ($datosComentarios->idPublicacion == $datosPublicacion->idpublicacion): ?>
+                                <div class="card">
+
+                        <div class="" style="width:30px; height:30px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:15px">
+                            <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datosComentarios->fotoPerfil ?>" alt="perfil" />
+
+                        </div>
+                        
+                        <a href="<?php echo URL_PROJECT ?>/<?php echo ucwords($datosComentarios->idUser); ?>/perfil/"><div style="margin-top:-40px; margin-left:60px; font-size:13px " class="mb-3"><?php echo ucwords($datosComentarios->usuario) ?></a>
+                        <?php if($datosComentarios->idUser == $_SESSION['logueado']|| $_SESSION['logueado']== 1):?>
+                            <a href="<?php echo URL_PROJECT ?>/<?php echo $datosComentarios->idcomentario ?>/eliminarComentario/" style="float:right; margin-right:20px"> <img src="<?php echo URL_PROJECT . '/public/img/eliminar.png' ?>" alt="borrar" /></a>
+                            <?php endif?>
+                        </div>
+                           
+                        <p class=""><?php echo $datosComentarios->contenidoComentario ?></p>
+                    </div>
+                            <?php endif ?>
+                        <?php endforeach ?>
 
                     </div>
 
