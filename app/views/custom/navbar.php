@@ -7,21 +7,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto ">
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo URL_PROJECT ?>/home">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Usuarios</a>
-                </li>
-                <li class="nav-item">
-                    <form class="d-flex">
-                        <input class="form-control me-2" name="buscar" type="text" placeholder="Buscar">
-                        <button class="btn btn-outline-success" type="submit">Buscar
-                        </button>
-                    </form>
-                </li>
+               
+                
+                
             </ul>
             <ul class="navbar-nav ">
+            <li class="nav-item">
+                    <a class="nav-link" href="#">Usuarios</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Mensajes</a>
                 </li>

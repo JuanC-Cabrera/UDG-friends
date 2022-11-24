@@ -79,9 +79,29 @@ include_once URL_APP . '/views/custom/navbar.php';
                             <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datosPublicacion->fotoPublicacion ?>" alt="" class="">
                         </div>
                         <div class="like">
-                            <a href="">Like </a>
-                            <a href="">Comentar</a>
+                            <a href="<?php echo URL_PROJECT ?>/<?php echo $datosPublicacion->idpublicacion ?>/megusta/<?php echo  $_SESSION['logueado'] ?>">Like<span><?php echo $datosPublicacion->num_likes ?></span></a>
                         </div>
+
+                        <!--Comentarios-->
+                        <div class="">
+                            <div class="" style="width:30px; height:30px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:15px">
+                                <a href="<?php echo URL_PROJECT ?>/<?php echo ucwords($_SESSION['usuario']); ?>/perfil/"> <img style="width: 100%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" /></a>
+                            </div>
+                            <form action="<?php echo URL_PROJECT ?>/home/comentar">
+                                <input type="hidden" name="iduser" value="<?php echo $_SESSION['logueado'] ?>">
+                                <input type="hidden" name="idpublicacion" value="<?php echo $datosPublicacion->idpublicacion?>">
+                                <div class="form-floating">
+                                    <textarea name="comentario" class="form-control " id="floatingTextarea" required></textarea>
+                                    <label for="floatingTextarea">comentar</label>
+                                </div>
+                                <div class="">
+                                    <button class="btn btn-success">Publicar</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+
                     </div>
 
 

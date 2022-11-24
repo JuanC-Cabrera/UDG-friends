@@ -15,12 +15,14 @@ class Home extends Controller
             $datosPerfil = $this->usuario->getPerfil($_SESSION['logueado']);
             $datosPublicaciones = $this->usuario->getPublicaciones();
 
+            $verificarLike = $this->usuario->misLikes($_SESSION['logueado']);
 
             if ($datosPerfil) {
                 $datosRed = [
                     'usuario' => $datosUsuario,
                     'perfil' => $datosPerfil,
-                    'publicaciones' =>  $datosPublicaciones
+                    'publicaciones' =>  $datosPublicaciones,
+                    'misLikes' => $verificarLike
                 ];
 
                 $this->view('pages/home', $datosRed);
@@ -129,7 +131,7 @@ class Home extends Controller
 
             $datosPerfil =  $this->usuario->getPerfil($_SESSION['logueado']);
 
-          $datos = [
+            $datos = [
                 'perfil' => $datosPerfil
             ];
 
@@ -152,7 +154,7 @@ class Home extends Controller
 
         $imagenActual = $this->usuario->getPerfil($datos['idusuarios']);
 
-        unlink('C:/xampp/htdocs/UDG-friends/public/'.$imagenActual->fotoPerfil);
+        unlink('C:/xampp/htdocs/UDG-friends/public/' . $imagenActual->fotoPerfil);
 
         if ($this->usuario->editarFoto($datos)) {
             redirection('/home/perfil/perfil');
@@ -163,18 +165,18 @@ class Home extends Controller
 
     public function publicar($idUsuario)
     {
-    
-    if(isset($_FILES['imagen'])){
-        $carpeta = 'C:/xampp/htdocs/UDG-friends/public/img/imagenesPublicaciones/';
-        opendir($carpeta);
-        $rutaImagen = '/img/imagenesPublicaciones/' . $_FILES['imagen']['name'];
-        $ruta = $carpeta . $_FILES['imagen']['name'];
-        if($ruta == $carpeta ){
-            $rutaImagen = 'Sin imagen';
-        }else{
-        copy($_FILES['imagen']['tmp_name'], $ruta);
+
+        if (isset($_FILES['imagen'])) {
+            $carpeta = 'C:/xampp/htdocs/UDG-friends/public/img/imagenesPublicaciones/';
+            opendir($carpeta);
+            $rutaImagen = '/img/imagenesPublicaciones/' . $_FILES['imagen']['name'];
+            $ruta = $carpeta . $_FILES['imagen']['name'];
+            if ($ruta == $carpeta) {
+                $rutaImagen = 'Sin imagen';
+            } else {
+                copy($_FILES['imagen']['tmp_name'], $ruta);
+            }
         }
-    }
 
         $datos = [
             'idusuario' => trim($_POST['id_user']),
@@ -189,18 +191,36 @@ class Home extends Controller
         }
     }
 
-    public function eliminar($idpublicacion){    
+    public function eliminar($idpublicacion)
+    {
 
         $publicacion = $this->usuario->getpublicacion($idpublicacion);
 
-        if($this->usuario->eliminarPublicacion($publicacion)){
+        if ($this->usuario->eliminarPublicacion($publicacion)) {
             unlink('C:/xampp/htdocs/UDG-friends/public/' . $publicacion->fotoPublicacion);
             redirection('/home');
-        }else{
-
+        } else {
         }
-       
-
     }
 
+    public function megusta($idpublicacion, $idpusuario)
+    {
+        $datos = [
+            'idpublicacion' => $idpublicacion,
+            'idusuario' => $idpusuario
+        ];
+
+        $datosPublicacion = $this->usuario->getPublicacion($idpublicacion);
+
+        if ($this->usuario->rowLikes($datos)) {
+            $this->usuario->eliminarLike($datos);
+                $this->usuario->deleteLikeCount($datosPublicacion);
+                redirection('/home');
+        } else {
+            if ($this->usuario->agregarLike($datos)) {
+                $this->usuario->addLikeCount($datosPublicacion);
+            }
+            redirection('/home');
+        }
+    }
 }
