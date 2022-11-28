@@ -134,14 +134,45 @@ class Home extends Controller
 
         if (isset($_SESSION['logueado'])) {
 
+            $datosUsuario = $this->usuario->getUsuario($_SESSION['usuario']);
+
+            $datosPublicaciones = $this->usuario->getPublicaciones();
+
+            $verificarLike = $this->usuario->misLikes($_SESSION['logueado']);
+
+            $comentarios = $this->usuario->getComentarios();
+
+            $informacionComentarios = $this->usuario->getInformacionComentarios($comentarios);
+
             $datosPerfil =  $this->usuario->getPerfil($user);
 
             $datos = [
-                'perfil' => $datosPerfil
+                'usuario' => $datosUsuario,
+                'perfil' => $datosPerfil,
+                'publicaciones' =>  $datosPublicaciones,
+                'misLikes' => $verificarLike,
+                'comentarios' => $informacionComentarios
+
             ];
 
             $this->view('pages/perfil/perfil', $datos);
         }
+    }
+
+    public function usuarios()
+    {
+
+        $datosUsuario = $this->usuario->getUsuario($_SESSION['usuario']);
+        $datosPerfil =  $this->usuario->getPerfil($_SESSION['logueado']);
+        $usuariosRegistrados = $this->usuario->getAllusuarios();
+
+        $datos = [
+            'usuario' => $datosUsuario,
+            'perfil' => $datosPerfil,
+            'allUsuarios' =>  $usuariosRegistrados
+        ];
+
+        $this->view('pages/usuarios', $datos);
     }
 
     public function cambiarImagen()
@@ -196,6 +227,16 @@ class Home extends Controller
         }
     }
 
+
+    public function eliminarUsuarios($id)
+    {
+
+        if ($this->usuario->eliminarTodo($id)) {
+            redirection('/home');
+        } else {
+        }
+    }
+
     public function eliminar($idpublicacion)
     {
 
@@ -219,8 +260,8 @@ class Home extends Controller
 
         if ($this->usuario->rowLikes($datos)) {
             $this->usuario->eliminarLike($datos);
-                $this->usuario->deleteLikeCount($datosPublicacion);
-                redirection('/home');
+            $this->usuario->deleteLikeCount($datosPublicacion);
+            redirection('/home');
         } else {
             if ($this->usuario->agregarLike($datos)) {
                 $this->usuario->addLikeCount($datosPublicacion);
@@ -234,7 +275,7 @@ class Home extends Controller
     public function comentar()
     {
 
-        if ($_SERVER['REQUEST_METHOD']=='POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $datos = [
                 'iduser' => trim($_POST['iduser']),
                 'idpublicacion' => trim($_POST['idpublicacion']),
@@ -246,19 +287,15 @@ class Home extends Controller
             } else {
                 redirection('/home');
             }
-
-        }else{
+        } else {
             redirection('/home');
         }
-
-       
     }
 
     public function eliminarComentario($id)
     {
 
         $this->usuario->eliminarComentarioUsuario($id);
-            redirection('/home');
-       
+        redirection('/home');
     }
 }

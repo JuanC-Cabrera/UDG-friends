@@ -12,9 +12,11 @@
                 
             </ul>
             <ul class="navbar-nav ">
+            <?php if($_SESSION['usuario']=='Super Administrador'):?>
             <li class="nav-item">
-                    <a class="nav-link" href="#">Usuarios</a>
+                    <a class="nav-link" href="<?php echo URL_PROJECT ?>/home/usuarios">Usuarios</a>
                 </li>
+                <?php endif?>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Mensajes</a>
                 </li>
@@ -22,9 +24,7 @@
                     <a class="nav-link" href="#">Notificaciones</a>
                 </li>
                 <li class="nav-item">
-                    <div style ="width:30px; height:30px; border-radius:50%; background-color: #ccc;  overflow: hidden;  margin:5px;">
-                    <img  style="width:100%; max-width: 150%;height:auto;" src="<?php echo URL_PROJECT . '/' . $datos['perfil']->fotoPerfil ?>" alt="perfil" />
-                </div>
+                    
                 </li>
                
                 <li style="margin-right:100px" class="nav-item dropdown">

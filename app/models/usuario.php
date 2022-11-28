@@ -32,6 +32,8 @@ class usuario
     return $this->db->registers();
   }
 
+
+
   public function getPublicacion($id)
   {
     $this->db->query('SELECT * FROM publicaciones WHERE idpublicacion = :id ');
@@ -42,6 +44,13 @@ class usuario
   public function getComentarios()
   {
     $this->db->query('SELECT * FROM comentarios');
+    return $this->db->registers();
+  }
+
+  public function getAllusuarios()
+  {
+    $this->db->query('SELECT U.idusuario, U.usuario, P.fotoPerfil, P.nombreCompleto FROM usuarios U
+    INNER JOIN perfil P ON U.idusuario = P.idUsuario');
     return $this->db->registers();
   }
 
@@ -59,18 +68,48 @@ class usuario
     $this->db->query('DELETE FROM comentarios WHERE idPublicacion = :publicacion');
     $this->db->bind(':publicacion', $publicacion->idpublicacion);
     if ($this->db->execute()) {
-    $this->db->query('DELETE FROM likes WHERE idPublicacion = :publicacion');
-    $this->db->bind(':publicacion', $publicacion->idpublicacion);
-    if ($this->db->execute()) {
-      $this->db->query('DELETE FROM publicaciones WHERE idpublicacion = :id ');
-    $this->db->bind(':id', $publicacion->idpublicacion);
-    if ($this->db->execute()) {
-      return true;
-    }else{
-      return false;
+      $this->db->query('DELETE FROM likes WHERE idPublicacion = :publicacion');
+      $this->db->bind(':publicacion', $publicacion->idpublicacion);
+      if ($this->db->execute()) {
+        $this->db->query('DELETE FROM publicaciones WHERE idpublicacion = :id ');
+        $this->db->bind(':id', $publicacion->idpublicacion);
+        if ($this->db->execute()) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+      }
+    } else {
     }
-    } else {}
-  } else {}
+  }
+
+  public function eliminarTodo($id)
+  {
+    $this->db->query('DELETE FROM comentarios WHERE idUser = :id');
+    $this->db->bind(':id', $id);
+    if ($this->db->execute()) {
+      $this->db->query('DELETE FROM likes WHERE idUser = :id');
+      $this->db->bind(':id', $id);
+      if ($this->db->execute()) {
+        $this->db->query('DELETE FROM publicaciones WHERE  idUserPublico = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+          $this->db->query('DELETE FROM perfil WHERE  idUsuario = :id');
+          $this->db->bind(':id', $id);
+          if ($this->db->execute()) {
+            $this->db->query('DELETE FROM usuarios WHERE  idusuario = :id');
+            $this->db->bind(':id', $id);
+            $this->db->execute();
+            return true;
+          } else {
+          }
+        } else {
+        }
+      } else {
+      }
+    } else {
+    }
   }
 
   public function rowLikes($datos)
@@ -82,7 +121,7 @@ class usuario
     return $this->db->rowCount();
   }
 
-  
+
 
   public function agregarLike($datos)
   {
@@ -95,7 +134,7 @@ class usuario
       return false;
     }
   }
-  
+
   public function eliminarLike($datos)
   {
     $this->db->query('DELETE FROM likes WHERE idPublicacion = :publicacion AND idUser = :iduser');
@@ -108,9 +147,9 @@ class usuario
   {
     $this->db->query('DELETE FROM comentarios WHERE idcomentario = :id');
     $this->db->bind(':id', $id);
-    if($this->db->execute()){
+    if ($this->db->execute()) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -120,9 +159,9 @@ class usuario
     $this->db->query('UPDATE publicaciones SET num_likes = :countLike WHERE idpublicacion = :idPublicacion');
     $this->db->bind(':countLike', ($datos->num_likes + 1));
     $this->db->bind(':idPublicacion', $datos->idpublicacion);
-    if($this->db->execute()){
+    if ($this->db->execute()) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -132,18 +171,18 @@ class usuario
     $this->db->query('UPDATE publicaciones SET num_likes = :countLike WHERE idpublicacion = :idPublicacion');
     $this->db->bind(':countLike', ($datos->num_likes - 1));
     $this->db->bind(':idPublicacion', $datos->idpublicacion);
-    if($this->db->execute()){
+    if ($this->db->execute()) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
   public function misLikes($user)
   {
-   $this->db->query('SELECT * FROM likes WHERE idUser = :id');
-   $this->db->bind(':id', $user);
-   return $this->db->registers();
+    $this->db->query('SELECT * FROM likes WHERE idUser = :id');
+    $this->db->bind(':id', $user);
+    return $this->db->registers();
   }
 
   public function verificarContrasena($datosUsuario, $contrasena)
@@ -226,11 +265,10 @@ class usuario
     $this->db->bind(':idpubli', $datos['idpublicacion']);
     $this->db->bind(':iduser', $datos['iduser']);
     $this->db->bind(':comentario', $datos['comentario']);
-    if($this->db->execute()){
+    if ($this->db->execute()) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
-
 }
